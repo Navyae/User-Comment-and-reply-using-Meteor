@@ -2,7 +2,6 @@
 
 /*Author: Navya Eetaram
 Created: [08/17/2015]
-Title: NFL - Global Frame - Comments
 <Associated Files: comments.html, comments.js, comments.less, commentserver.js,comments_page.less,comments_page_logic.js,comments_page.html
  */
 
