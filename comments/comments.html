@@ -1,0 +1,137 @@
+<!-- Author: Navya Eetaram
+Created: [08/17/2015]
+Title: NFL - Global Frame - Comments
+Associated Files: comments.html, comments.js, comments.less, commentserver.js-->
+
+<head>
+  <script src="https://apis.google.com/js/platform.js" async defer></script>
+</head>
+<template name= "comments">
+  <div class="c-m" >
+
+    <div class="module-header">
+      <span class="module-header-line"></span>
+
+      <span class="module-header-title">Leave a Comment</span>
+    </div>
+    <!--Input box-->
+    <div class="c-m_u_i" >
+      <div class="c-m_u_i_image"></div>
+      <div class="c-m_u_i_crt" ></div>
+      <div class="c-m_u_i_box">
+        <!--Container to enter text -->
+        <textarea class="c-m_u_i_text" id="comment1" placeholder="   What is your opinion?"></textarea>
+
+        <div class="c-m_u_i_share">
+          <span class= "c-m_u_i_share_group">
+            <!-- Share Options-->
+            <a class="c_gplus f-l" href="https://plus.google.com/share?url={URL}" onclick="javascript:window.open(this.href,'', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');return false;"><i class="fa fa-google-plus"></i></a>
+            <a class="c_fbook f-r" style="margin-left:75px;" href="https://www.facebook.com/sharer/sharer.php?u=" onclick="javascript:window.open(this.href,'', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');return false;"><i class="fa fa-facebook"></i></a>
+            <a class="c_twitter" href="https://twitter.com/intent/tweet" onclick="javascript:window.open(this.href,'', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');"><i class="fa fa-twitter"></i></a>
+          </span>
+          <!-- submit button-->
+          <span class="c-m_u_i_share_button">POST</span>
+        </div>
+      </div>
+    </div>
+    <!--Container for drop down menu -->
+    <div class="c-m_c-srt">
+      <span class="left_sort">
+        <span class="c-m_sorted_by f-l"> Sorted by :
+          <span class="c-m_result-sort">Top Comments</span>
+        </span>
+      </span>
+      <span class="c-m_right_sort">
+        <span class="c-m_c-count"><ortext> {{cmntcount}} </ortext> Comments | </span>
+        <span class="c-m_downarrow"> Sort Options
+          <i class="fa fa-sort-desc" id="sortoption" style="cursor:pointer; color:#f26f26"></i></span>
+
+          <div class="dropdown-menu algndrpdwn">
+            <div class="txtalgn rmvbrdr" id="mostrecent">
+              <i class="fa fa-calendar"></i>
+              <span> Most Recent</span>
+            </div>
+            <div class="txtalgn" id="tcomments">
+              <i class="fa fa-star-o"></i>
+              <span> Top Comments</span>
+            </div>
+
+          </div>
+        </span>
+      </div>
+      <!-- Container for comments-->
+      <div class="c-m_c-box">
+        {{#each cdata}}
+        <div class="c-m_c-box_row">
+          <span class="c-m_c-box_row_image"></span>
+          <span class="c-m_c-box_row_text">
+            <div class = "c-m_c-box_row_name"> User Name </div>
+            <i class="fa fa-circle f-l" style="color:#959595; font-size:4px; margin-top:10px; margin-left:10px; margin-right:15px"></i>
+              <div class = "c-m_c-box_row_t"><i class="fa fa-star-o"></i> Top Commenter </div>
+            <div class = "c-m_c-box_row_u-cmnt" id="{{cmntid}}">
+              {{text}}
+            </div>
+
+            <div class ="c-m_c-box_row_u-reply">
+              <i class="fa fa-reply f-l">
+                <span class="underline" value="Reply" onclick="display('box{{cmntid}}')">{{replycount}} Replies</span></i>
+                <i class="fa fa-circle f-l" style="color:#959595; font-size:3px; margin-top:5px; margin-left:10px; margin-left:10px; margin-right:15px"></i>
+                <i class="fa fa-share-alt f-l"> <span class="underline">Share This </span></i>
+                <i class="fa fa-circle f-l" style="color:#959595; font-size:3px; margin-top:5px; margin-left:10px; margin-right:15px"></i>
+                <i class="fa fa-plus f-l"><span class="underline"> Add To</span></i>
+                <i class="fa fa-circle f-l" style="color:#959595; font-size:3px; margin-top:5px; margin-left:10px; margin-right:15px "></i>
+                <span class="c-m_c-box_row_time f-l">{{time}}</span>
+
+              </div>
+
+            </span>
+            <!--Container for reply -->
+            <div class="boxvalue" id="box{{cmntid}}" style="display:none">
+              {{#each rdata}}
+              <div class="r-bx_on-reply_row">
+                <span class="r-bx_on-reply_row_image"></span>
+                <span class="r-bx_on-reply_row_text" id="{{rpyid}}">
+                  <span class="r-bx_on-reply_row_text_reply">
+                    <span class = "r-bx_on-reply_row_profile_name"> User Name :  </span> {{usrrply}}</span>
+                    <!--sharing options -->
+                    <div class ="r-bx_on-reply_row_user-reply">
+                      <i class="fa fa-share-alt f-l"> <span class="underline">Share This </span></i>
+                      <i class="fa fa-circle f-l" style="color:#959595; font-size:3px; margin-top:5px; margin-left:10px; margin-right:15px"></i>
+                      <i class="fa fa-plus f-l"><span class="underline"> Add To</span></i>
+                      <i class="fa fa-circle f-l" style="color:#959595; font-size:3px; margin-top:5px; margin-left:10px; margin-right:15px "></i>
+                      <span class="c-m_c-box_row_time f-l">{{time}}</span>
+                    </div>
+                  </span>
+                </div>
+                {{/each}}
+                <!--image for reply box -->
+                <span class="r-bx_row_image"> </span>
+                <span class="r-bx_r-text">
+                  <textarea class="r-bx_row_text r-bx_{{cmntid}}" placeholder="What is your opinion?"></textarea>
+                  <span class="r-bx_row_r-button"><i class="fa fa-paper-plane"></i></span>
+                </span>
+
+              </div>
+            </div>
+            {{/each}}
+          </div>
+          <br>
+          <!-- Script for displaying reply input box-->
+          <script type="text/javascript">
+          function display(id) {
+            var cmt = document.getElementById(id)
+
+            if (cmt.style.display == "none") {
+              cmt.style.display = "block"
+            }
+            else {
+              cmt.style.display = "none"
+            }
+            return false;
+          }
+          </script>
+          <!-- footer-->
+
+        </div>
+
+      </template>
